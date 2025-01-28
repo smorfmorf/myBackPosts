@@ -51,7 +51,8 @@ class PostController {
       where: { id: Number(postId) },
       data: {
         title: req.body.title,
-        text: req.body.text
+        text: req.body.text,
+        imageUrl: req.body.imageUrl
       }
     })
     res.json(data)
