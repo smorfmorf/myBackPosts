@@ -6,7 +6,6 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 
-
 import UserController from './controller/UserController.js';
 import PostController from './controller/PostController.js';
 import { registerValidator, loginValidator } from './middleware/validatorExpress.js'
