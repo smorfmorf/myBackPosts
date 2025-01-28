@@ -14,7 +14,7 @@ import { checkAuth } from './middleware/checkAuth.js';
 
 
 dotenv.config()
-const PORT = process.env.PORT || 4444;
+const PORT = process.env.PORT || 5555;
 
 const app = express();
 app.use(cors());
@@ -47,12 +47,24 @@ async function start() {
 
 
 
-  app.get('/', (req, res, next) => {
-    console.log('ModdleWare ok]')
-    next()
-  }, (req, res) => {
-    res.send('Hello World!');
+  app.get('/', async (req, res) => {
+    try {
+      const users = await prisma.user.findMany();
+      res.json(users);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Ошибка при подключении к базе данных' });
+    }
   });
+
+
+
+  // app.get('/', (req, res, next) => {
+  //   console.log('ModdleWare ok]')
+  //   next()
+  // }, (req, res) => {
+  //   res.send('Hello World!');
+  // });
 
   //* Авторизация
   app.post('/api/register', registerValidator, handleValidateErrors, UserController.registerUser)
